@@ -4,15 +4,15 @@
       <div slot="header" class="clearfix">
         <span style="font-size: 40px">Please enter the password</span>
       </div>
-      <el-form @submit.native.prevent>
+      <!-- <el-form @submit.native.prevent> -->
         <div>
           <!-- <input class="inputarea" @keyup.enter.native="notice2"> -->
           <!-- <input class="inputarea" @submit.native.prevent="notice2"> -->
-          <el-input type="password" v-model="input" class="inputarea"></el-input>
+          <el-input type="password" v-model="input" class="inputarea" @change="notice2()"></el-input>
           <!-- <el-input type="text" v-model="input" placeholder="" show-password class="inputarea" :rows="2" @keyup.enter.native="notice2"></el-input> -->
           <!-- <el-input v-model="input" placeholder="enter here" show-password @change="notice()" @keyup.enter.native="notice()"></el-input> -->
         </div>
-      </el-form>
+      <!-- </el-form> -->
       <div>
         <el-button round class="button-confirm" @click="notice()">Confirm</el-button>
       </div>
@@ -49,16 +49,16 @@
     },
     methods: {
       notice() {
-        // setTimeout(() => {
+        setTimeout(() => {
           debugger
           console.log(this.output)
           this.dialogVisible = true
           this.getdata()
-        // }, 1000);
+        }, 1000);
       },
       notice2() {
-        this.dialogVisible = true
-        this.getdata()
+        // this.dialogVisible = true
+        // this.getdata()
       },
       jump() {
         if (this.result) {
@@ -78,7 +78,7 @@
       //   console.log(test)
       // },
       getdata() {
-        setTimeout(() => {
+        // setTimeout(() => {
           var res = loadFile("./test.txt")
           console.log(res)
           this.output = res
@@ -87,7 +87,7 @@
           } else {
             this.output = "no results currently"
           }
-        }, 1000);
+        // }, 1000);
       }
     }
   }
