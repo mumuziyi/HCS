@@ -27,7 +27,7 @@ public class KeyPressed implements NativeKeyListener {
     //calculate time
     private static Date date;
 
-    File file = new File("test.txt");
+    File file = new File("./public/test.txt");
     FileWriter fw;
 
 

@@ -20,8 +20,8 @@
     <el-dialog title="Press" :visible.sync="dialogVisible" width="30%" center top="20%">
       <span>{{output}}</span>
       <span slot="footer" class="dialog-footer">
-                                          <el-button round @click="jump()">Confirm</el-button>
-                                        </span>
+                                            <el-button round @click="jump()">Confirm</el-button>
+                                          </span>
     </el-dialog>
   </div>
 </template>
@@ -49,20 +49,15 @@
     },
     methods: {
       notice() {
-        setTimeout(() => {
+        // setTimeout(() => {
           debugger
           console.log(this.output)
           this.dialogVisible = true
           this.getdata()
-        }, 1000);
-        // console.log(this.output)
-        // this.dialogVisible = true
-        // this.getdata()
+        // }, 1000);
       },
       notice2() {
-        console.log(this.output)
         this.dialogVisible = true
-        debugger
         this.getdata()
       },
       jump() {
@@ -75,18 +70,24 @@
             name: 'IndexPage',
             path: './indexPage.vue'
           })
+        } else {
+          this.dialogVisible = false
         }
       },
       // getdata() {
       //   console.log(test)
       // },
       getdata() {
-        var res = loadFile("./test.txt")
-        console.log(res)
-        this.output = res
-        if (this.output) {
-          this.result = true
-        }
+        setTimeout(() => {
+          var res = loadFile("./test.txt")
+          console.log(res)
+          this.output = res
+          if (this.output) {
+            this.result = true
+          } else {
+            this.output = "no results currently"
+          }
+        }, 1000);
       }
     }
   }
@@ -117,16 +118,16 @@
     font-size: 100px;
   }
   /* .inner{
-            height: 300px;
-          } */
-  /* .el-input--suffix .el-input__inner {
-            padding-right: 30px;
-            height: 300px;
-          }
-          input.el-input__inner {
               height: 300px;
-              padding: 100px;
-          } */
+            } */
+  /* .el-input--suffix .el-input__inner {
+              padding-right: 30px;
+              height: 300px;
+            }
+            input.el-input__inner {
+                height: 300px;
+                padding: 100px;
+            } */
   .button-confirm {
     position: absolute;
     bottom: 5%;

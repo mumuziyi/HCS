@@ -13,3 +13,9 @@
 ## ToDo
     RequiredDataUtils.calculatePressTime()函数需要完成，建模
     数据传输
+
+## 前端运行
+    1. cmd
+    2. npm install
+    3. npm run build
+    4. npm run serve
