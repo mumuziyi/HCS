@@ -28,6 +28,7 @@ public class KeyPressed implements NativeKeyListener {
     private static Date date;
 
     File file = new File("./public/test.txt");
+    File file2 = new File("./public/verification.txt");
     FileWriter fw;
 
 
@@ -125,6 +126,13 @@ public class KeyPressed implements NativeKeyListener {
         }
 
         if (released == "\n"){
+            try {
+                fw = new FileWriter(file2);
+                fw.append("");
+                fw.close();
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
             return;
         }
 
@@ -135,23 +143,39 @@ public class KeyPressed implements NativeKeyListener {
                 long correctPressedTime = endDate.getTime() - date.getTime();
                 // 判断按压时长
                 if (correctPressedTime/1000 > RequiredDataUtils.getRequiredPressTime()){
-                    System.out.println("pass The verification");
+                    try {
+                        fw = new FileWriter(file2);
+                        fw.append("pass The verification");
+                        fw.close();
+                    } catch (IOException ex) {
+                        throw new RuntimeException(ex);
+                    }
                     startVerification = false;
                     password = new HashSet<String>();
                 }
                 else {
-                    System.out.println("didn't meet the time requirement: " +
-                            RequiredDataUtils.getRequiredPressTime() + "s");
-                    System.out.println("Please retry");
+                    try {
+                        fw = new FileWriter(file2);
+                        fw.append("didn't meet the time requirement: " + RequiredDataUtils.getRequiredPressTime() + "S.   "
+                                + "Please retry");
+                        fw.close();
+                    } catch (IOException ex) {
+                        throw new RuntimeException(ex);
+                    }
                     startVerification = false;
                     password = new HashSet<String>();
                 }
             }
             // 按键数量不够
             else {
-                System.out.println("Number of pressed keys less than requirement: " +
-                        RequiredDataUtils.getNumberNeedBePressed());
-                System.out.println("please retry");
+                try {
+                    fw = new FileWriter(file2);
+                    fw.append("Number of pressed keys less than requirement: " + RequiredDataUtils.getNumberNeedBePressed());
+                    fw.close();
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
+
                 startVerification = false;
                 password = new HashSet<String>();
             }
