@@ -144,6 +144,7 @@ public class KeyPressed implements NativeKeyListener {
                 // 判断按压时长
                 if (correctPressedTime/1000 > RequiredDataUtils.getRequiredPressTime()){
                     try {
+                        System.out.println("pass The verification");
                         fw = new FileWriter(file2);
                         fw.append("pass The verification");
                         fw.close();
@@ -156,6 +157,8 @@ public class KeyPressed implements NativeKeyListener {
                 else {
                     try {
                         fw = new FileWriter(file2);
+                        System.out.println("didn't meet the time requirement: " + RequiredDataUtils.getRequiredPressTime() + "S.   "
+                                + "Please retry");
                         fw.append("didn't meet the time requirement: " + RequiredDataUtils.getRequiredPressTime() + "S.   "
                                 + "Please retry");
                         fw.close();
@@ -170,6 +173,7 @@ public class KeyPressed implements NativeKeyListener {
             else {
                 try {
                     fw = new FileWriter(file2);
+                    System.out.println("Number of pressed keys less than requirement: " + RequiredDataUtils.getNumberNeedBePressed());
                     fw.append("Number of pressed keys less than requirement: " + RequiredDataUtils.getNumberNeedBePressed());
                     fw.close();
                 } catch (IOException ex) {
