@@ -30,7 +30,6 @@
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
   .el-card {
-    opacity: 0.98;
     width: 30%;
     height: 60%;
     position: absolute;
