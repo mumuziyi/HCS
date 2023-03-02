@@ -5,24 +5,41 @@
         <span style="font-size: 40px">Please enter the password</span>
       </div>
       <!-- <el-form @submit.native.prevent> -->
-        <div>
-          <!-- <input class="inputarea" @keyup.enter.native="notice2"> -->
-          <!-- <input class="inputarea" @submit.native.prevent="notice2"> -->
-          <el-input type="password" v-model="input" class="inputarea" @change="notice2()"></el-input>
-          <!-- <el-input type="text" v-model="input" placeholder="" show-password class="inputarea" :rows="2" @keyup.enter.native="notice2"></el-input> -->
-          <!-- <el-input v-model="input" placeholder="enter here" show-password @change="notice()" @keyup.enter.native="notice()"></el-input> -->
-        </div>
+      <div>
+        <el-input type="password" v-model="input" class="inputarea"></el-input>
+      </div>
       <!-- </el-form> -->
       <div>
-        <el-button round class="button-confirm" @click="notice()">Confirm</el-button>
+        <el-button round class="button-confirm" @click="notice()">See Press Requirement</el-button>
+      </div>
+      <div>
+        <el-button round class="button-result" @click="checkResult()">Verify</el-button>
       </div>
     </el-card>
     <el-dialog title="Press" :visible.sync="dialogVisible" width="30%" center top="20%">
       <span>{{output}}</span>
-      <span slot="footer" class="dialog-footer">
-                                            <el-button round @click="jump()">Confirm</el-button>
-                                          </span>
+      <p></p>
+      <!-- <span slot="footer" class="dialog-footer">
+        <el-button round @click="seeVerificationResult()">Confirm</el-button>
+      </span> -->
     </el-dialog>
+    <el-dialog title="Result" :visible.sync="dialogVisibleForResult" width="30%" center top="20%">
+      <p></p>
+      <span>{{verification}}</span>
+      <span slot="footer" class="dialog-footer">
+        <el-button round v-if="able" @click="jump()">Confirm</el-button>
+      </span>
+    </el-dialog>
+    <el-card class="con" v-if="jumpTo">
+      <div style="font-size:30px">
+        Congratulations! 
+      </div>
+      If you want to go back to 
+      <a href @click="jumpback()">Main page</a>, click here!
+      <!-- <div>
+        <img src="../assets/congrat.png" class="image">
+      </div> -->
+    </el-card>
   </div>
 </template>
 
@@ -41,7 +58,10 @@
         see: true,
         output: null,
         result: false,
-        timer: ''
+        verification: '',
+        able: false,
+        jumpTo: false,
+        dialogVisibleForResult: false
       };
     },
     mounted() {
@@ -50,44 +70,60 @@
     methods: {
       notice() {
         setTimeout(() => {
-          debugger
-          console.log(this.output)
           this.dialogVisible = true
           this.getdata()
         }, 1000);
       },
-      notice2() {
-        // this.dialogVisible = true
-        // this.getdata()
+      checkResult(){
+        this.dialogVisible = false
+        this.dialogVisibleForResult = true
+        setInterval(this.getVerification(), 500);
       },
+
       jump() {
-        if (this.result) {
+        if (this.able) {
           this.see = false
           this.dialogVisible = false
-          this.output = null
-          console.log(this.output)
-          this.$router.push({
-            name: 'IndexPage',
-            path: './indexPage.vue'
-          })
+          this.able = false
+          this.jumpTo = true
+          this.dialogVisibleForResult = false
+          // this.$router.push({
+          //   name: 'IndexPage',
+          //   path: './indexPage.vue'
+          // })
         } else {
           this.dialogVisible = false
         }
       },
-      // getdata() {
-      //   console.log(test)
+      jumpback(){
+        this.jumpTo = false
+        this.see = true
+        this.able = false
+      },
+      // seeVerificationResult(){
+      //   this.dialogVisible = false
+      //   this.dialogVisibleForResult = true
+      //   setInterval(this.getVerification(), 500);
       // },
+      getVerification() {
+        var temp = loadFile("./verification.txt")
+        this.verification = temp
+        if (temp == "pass The verification") {
+          this.able = true
+        } else {
+          this.able = false
+        }
+      },
       getdata() {
         // setTimeout(() => {
-          var res = loadFile("./test.txt")
-          console.log(res)
+        var res = loadFile("./test.txt")
+        console.log(res)
+        if (res) {
           this.output = res
-          if (this.output) {
-            this.result = true
-          } else {
-            this.output = "no results currently"
-          }
-        // }, 1000);
+          // setInterval(this.getVerification(), 500);
+        } else {
+          this.output = "no results currently"
+        }
       }
     }
   }
@@ -96,7 +132,6 @@
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
   .el-card {
-    opacity: 0.98;
     width: 60%;
     height: 60%;
     position: absolute;
@@ -117,21 +152,42 @@
     margin: auto;
     font-size: 100px;
   }
+  
+  .con {
+    width: 30%;
+    height: 60%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    margin: auto;
+    background-image: url("../assets/congrat.png");
+        background-repeat: no-repeat;
+    /* Do not repeat the image */
+    background-size: cover;
+    /* Resize the background image to cover the entire container */
+  }
   /* .inner{
-              height: 300px;
-            } */
-  /* .el-input--suffix .el-input__inner {
-              padding-right: 30px;
-              height: 300px;
-            }
-            input.el-input__inner {
                 height: 300px;
-                padding: 100px;
-            } */
+              } */
+  /* .el-input--suffix .el-input__inner {
+                padding-right: 30px;
+                height: 300px;
+              }
+              input.el-input__inner {
+                  height: 300px;
+                  padding: 100px;
+              } */
   .button-confirm {
     position: absolute;
     bottom: 5%;
-    left: 45%;
+    left: 30%;
+  }
+  .button-result {
+    position: absolute;
+    bottom: 5%;
+    left: 50%;
   }
   .el-dialog {
     height: 50%;
