@@ -1,0 +1,1 @@
+Number of pressed keys less than requirement: 4
