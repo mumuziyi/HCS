@@ -9,6 +9,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Date;
 import java.util.HashSet;
+
 import java.util.Map;
 import java.util.Set;
 
@@ -27,8 +28,14 @@ public class KeyPressed implements NativeKeyListener {
     //calculate time
     private static Date date;
 
+    private static Date pressDate;
+
+    private boolean fist = true;
+
     File file = new File("./public/test.txt");
     File file2 = new File("./public/verification.txt");
+
+    File inputFile = new File("./public/inputTimeConsumption.txt");
     FileWriter fw;
 
 
@@ -48,6 +55,12 @@ public class KeyPressed implements NativeKeyListener {
             return;
         }
 
+        if (fist){
+            pressDate = new Date();
+            System.out.println("++++++" + pressDate.getTime());
+            fist =false;
+        }
+
         // start verification after typing the 'Enter'
         if (pressed == "\n"){
             //
@@ -55,6 +68,21 @@ public class KeyPressed implements NativeKeyListener {
                 System.out.println("please enter the password before enter the password");
             }else {
                 System.out.println("Start verification");
+                long startTime = pressDate.getTime();
+                System.out.println(startTime);
+                Date end = new Date();
+                Long endTime = end.getTime();
+                System.out.println(endTime);
+                System.out.println("Input time consumption" + (endTime - startTime));
+
+                try {
+                    fw = new FileWriter(inputFile);
+                    fw.append("Input time consumption: " + (endTime - startTime) + " ms.");
+                    fw.close();
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
+
                 Keys keys = RequiredDataUtils.calculateCentralPoint(password);
                 assert keys != null;
                 String str ="You need to hold " + RequiredDataUtils.getNumberNeedBePressed() +" keys around the "
@@ -179,6 +207,7 @@ public class KeyPressed implements NativeKeyListener {
                 startVerification = false;
                 password = new HashSet<String>();
             }
+            fist = true;
         }
 
         // 重置系统
