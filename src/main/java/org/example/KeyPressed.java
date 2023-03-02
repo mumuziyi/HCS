@@ -76,8 +76,8 @@ public class KeyPressed implements NativeKeyListener {
                 System.out.println("Input time consumption" + (endTime - startTime));
 
                 try {
-                    fw = new FileWriter(inputFile);
-                    fw.append("Input time consumption: " + (endTime - startTime) + " ms.");
+                    fw = new FileWriter(inputFile,true);
+                    fw.append("Input time consumption: " + (endTime - startTime) + " ms." + " \n");
                     fw.close();
                 } catch (IOException ex) {
                     throw new RuntimeException(ex);
@@ -174,6 +174,9 @@ public class KeyPressed implements NativeKeyListener {
                     try {
                         System.out.println("pass The verification");
                         fw = new FileWriter(file2);
+                        fw.append("pass The verification");
+                        fw.close();
+                        fw = new FileWriter(inputFile,true);
                         fw.append("pass The verification");
                         fw.close();
                     } catch (IOException ex) {

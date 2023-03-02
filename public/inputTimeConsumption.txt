@@ -1,1 +1,8 @@
-Input time consumption: 3176 ms.Input time consumption: 3347 ms.Input time consumption: 3576 ms.
+Input time consumption: 6420 ms.Input time consumption: 1919 ms.Input time consumption: 3654 ms.Input time consumption: 4985 ms. 
+pass The verificationInput time consumption: 2886 ms. 
+Input time consumption: 2543 ms. 
+Input time consumption: 6163 ms. 
+Input time consumption: 4355 ms. 
+pass The verificationInput time consumption: 65689 ms. 
+Input time consumption: 1650 ms. 
+Input time consumption: 12368 ms. 
