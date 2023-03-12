@@ -6,13 +6,13 @@
       </div>
       <!-- <el-form @submit.native.prevent> -->
       <div>
-        <el-input type="password" v-model="input" class="inputarea"></el-input>
+        <input type="password" v-model="input" class="inputarea">
       </div>
       <!-- </el-form> -->
-      <div>
+      <div class="buttons">
         <el-button round class="button-confirm" @click="notice()">See Press Requirement</el-button>
       </div>
-      <div>
+      <div class="buttons">
         <el-button round class="button-result" @click="checkResult()">Verify</el-button>
       </div>
     </el-card>
@@ -179,15 +179,21 @@
                   height: 300px;
                   padding: 100px;
               } */
+  .buttons{
+    padding-top: 200px;
+  }
   .button-confirm {
     position: absolute;
     bottom: 5%;
-    left: 30%;
+    left:15%;
+    font-size: 40px;
+    
   }
   .button-result {
     position: absolute;
     bottom: 5%;
-    left: 50%;
+    right: 15%;
+    font-size: 40px;
   }
   .el-dialog {
     height: 50%;
